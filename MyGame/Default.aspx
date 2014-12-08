@@ -4,6 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="main_content" runat="server">
     <asp:Literal ID="Literal_Test" runat="server"></asp:Literal> 
+    <h1>Test</h1>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="foot_js" runat="server">
 </asp:Content>
