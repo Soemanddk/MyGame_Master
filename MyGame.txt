@@ -1,0 +1,59 @@
+cAttributes
+----------
+Strength - +Melee Damage %
+Stamina - +Health, +Energy
+Agility - +Avoidance %, + 0,5 Dexterity
+Dexterity - +Spell/Melee Multi Cast/Attack %, +Spell/Melee Damage %
+Wisdom - +Resistance, + All stats 0,1;
+Intelligence - +power, +Spell Damage %
+
+Melee Attack Damage - Unlimited
+Spell Cast Damage - Unlimited
+Melee Multi Attack - (max-300%) = 3 attacks
+Spell Multi Attack - (max-300%) = 3 attacks
+CritChance - (max-100%)
+CritBonus - 
+Potency - 
+Skill Modifier - (max-50% after calculation of Damage & potency)
+
+Avoidance - (max-50%)
+Resistance - Received Damage Reduction
+
+Health - Keeps your charecter alive
+Power - Consumed using Spells/Heals
+Energy - Consumed when Melee/Spell Attack & Heals
+
+
+Melee Attack - Use Energy
+----
+Melee Attack Damage
+Melee Multi Attack
+CritChance
+CritBonus
+Potency
+----
+
+Spell Cast - Use Power & Energy
+----
+Spell Cast Damage
+Spell Multi Attack
+CritChance
+CritBonus
+Potency
+----
+
+Skills - Can use either or both Power & Energy
+----
+Use either Melee Attack or Spell Cast(not both)
+CritChance
+CritBonus
+Potency
+Skill Modifier
+----
+
+Healing - Use Power & Energy
+----
+CritChance
+CritBonus
+Potency
+----

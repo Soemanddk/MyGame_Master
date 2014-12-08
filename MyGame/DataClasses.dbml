@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MyGame" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\MyGame.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SecretMyGameConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.alignments" Member="alignments">
+    <Type Name="alignment">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="alignment_race" Member="races" ThisKey="id" OtherKey="alignment_id" Type="race" />
+    </Type>
+  </Table>
+  <Table Name="dbo.users" Member="users">
+    <Type Name="user">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="role_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="last_online" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="user_charecter" Member="charecters" ThisKey="id" OtherKey="user_id" Type="charecter" />
+      <Association Name="user_user_right" Member="user_rights" ThisKey="id" OtherKey="user_id" Type="user_right" />
+      <Association Name="role_user" Member="role" ThisKey="role_id" OtherKey="id" Type="role" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.charecter_item_enchantments" Member="charecter_item_enchantments">
+    <Type Name="charecter_item_enchantment">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="charecter_item_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="item_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Association Name="charecter_item_charecter_item_enchantment" Member="charecter_item" ThisKey="charecter_item_id" OtherKey="id" Type="charecter_item" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="item_charecter_item_enchantment" Member="item" ThisKey="charecter_item_id" OtherKey="id" Type="item" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.charecter_items" Member="charecter_items">
+    <Type Name="charecter_item">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="charecter_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="item_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="equipped" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="charecter_item_charecter_item_enchantment" Member="charecter_item_enchantments" ThisKey="id" OtherKey="charecter_item_id" Type="charecter_item_enchantment" />
+      <Association Name="charecter_charecter_item" Member="charecter" ThisKey="charecter_id" OtherKey="id" Type="charecter" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="item_charecter_item" Member="item" ThisKey="item_id" OtherKey="id" Type="item" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.charecter_stats" Member="charecter_stats">
+    <Type Name="charecter_stat">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="charecter_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="stat_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="amount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="charecter_charecter_stat" Member="charecter" ThisKey="charecter_id" OtherKey="id" Type="charecter" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="stat_charecter_stat" Member="stat" ThisKey="stat_id" OtherKey="id" Type="stat" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.charecters" Member="charecters">
+    <Type Name="charecter">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="race_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="race_picture_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="charecter_charecter_item" Member="charecter_items" ThisKey="id" OtherKey="charecter_id" Type="charecter_item" />
+      <Association Name="charecter_charecter_stat" Member="charecter_stats" ThisKey="id" OtherKey="charecter_id" Type="charecter_stat" />
+      <Association Name="user_charecter" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="race_picture_charecter" Member="race_picture" ThisKey="race_picture_id" OtherKey="id" Type="race_picture" IsForeignKey="true" />
+      <Association Name="race_charecter" Member="race" ThisKey="race_id" OtherKey="id" Type="race" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.glyphicons" Member="glyphicons">
+    <Type Name="glyphicon">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tag" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="glyphicon_link" Member="links" ThisKey="id" OtherKey="glyph_id" Type="link" />
+    </Type>
+  </Table>
+  <Table Name="dbo.item_categories" Member="item_categories">
+    <Type Name="item_category">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="equipable" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="item_category_slot_type" Member="slot_types" ThisKey="id" OtherKey="item_category_id" Type="slot_type" />
+    </Type>
+  </Table>
+  <Table Name="dbo.item_stats" Member="item_stats">
+    <Type Name="item_stat">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="item_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="stat_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="amount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="item_item_stat" Member="item" ThisKey="item_id" OtherKey="id" Type="item" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="stat_item_stat" Member="stat" ThisKey="stat_id" OtherKey="id" Type="stat" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.items" Member="items">
+    <Type Name="item">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="slot_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="max_enchantments" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="picture_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="item_charecter_item_enchantment" Member="charecter_item_enchantments" ThisKey="id" OtherKey="charecter_item_id" Type="charecter_item_enchantment" />
+      <Association Name="item_charecter_item" Member="charecter_items" ThisKey="id" OtherKey="item_id" Type="charecter_item" />
+      <Association Name="item_item_stat" Member="item_stats" ThisKey="id" OtherKey="item_id" Type="item_stat" />
+      <Association Name="slot_type_item" Member="slot_type" ThisKey="slot_type_id" OtherKey="id" Type="slot_type" IsForeignKey="true" />
+      <Association Name="item_picture_item" Member="item_picture" ThisKey="picture_id" OtherKey="id" Type="item_picture" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.links" Member="links">
+    <Type Name="link">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="urlpage" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="glyph_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="rights_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="badgets_table" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="link_menu_link" Member="menu_links" ThisKey="id" OtherKey="link_id" Type="menu_link" />
+      <Association Name="glyphicon_link" Member="glyphicon" ThisKey="glyph_id" OtherKey="id" Type="glyphicon" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="right_link" Member="right" ThisKey="rights_id" OtherKey="id" Type="right" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.menu_links" Member="menu_links">
+    <Type Name="menu_link">
+      <Column Name="menu_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="link_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="is_primary" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="link_menu_link" Member="link" ThisKey="link_id" OtherKey="id" Type="link" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="menus_menu_link" Member="menus" ThisKey="menu_id" OtherKey="id" Type="menus" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.menus" Member="menus">
+    <Type Name="menus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="menus_menu_link" Member="menu_links" ThisKey="id" OtherKey="menu_id" Type="menu_link" />
+    </Type>
+  </Table>
+  <Table Name="dbo.race_pictures" Member="race_pictures">
+    <Type Name="race_picture">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="img_type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="race_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="race_picture_charecter" Member="charecters" ThisKey="id" OtherKey="race_picture_id" Type="charecter" />
+      <Association Name="race_race_picture" Member="race" ThisKey="race_id" OtherKey="id" Type="race" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.races" Member="races">
+    <Type Name="race">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="alignment_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="race_charecter" Member="charecters" ThisKey="id" OtherKey="race_id" Type="charecter" />
+      <Association Name="race_race_picture" Member="race_pictures" ThisKey="id" OtherKey="race_id" Type="race_picture" />
+      <Association Name="alignment_race" Member="alignment" ThisKey="alignment_id" OtherKey="id" Type="alignment" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.rights" Member="rights">
+    <Type Name="right">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="codename" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="right_link" Member="links" ThisKey="id" OtherKey="rights_id" Type="link" />
+      <Association Name="right_role_right" Member="role_rights" ThisKey="id" OtherKey="rights_id" Type="role_right" />
+      <Association Name="right_user_right" Member="user_rights" ThisKey="id" OtherKey="rights_id" Type="user_right" />
+    </Type>
+  </Table>
+  <Table Name="dbo.role_rights" Member="role_rights">
+    <Type Name="role_right">
+      <Column Name="role_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="rights_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="right_role_right" Member="right" ThisKey="rights_id" OtherKey="id" Type="right" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="role_role_right" Member="role" ThisKey="role_id" OtherKey="id" Type="role" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.roles" Member="roles">
+    <Type Name="role">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="role_user" Member="users" ThisKey="id" OtherKey="role_id" Type="user" />
+      <Association Name="role_role_right" Member="role_rights" ThisKey="id" OtherKey="role_id" Type="role_right" />
+    </Type>
+  </Table>
+  <Table Name="dbo.slot_types" Member="slot_types">
+    <Type Name="slot_type">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="item_category_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="slot_type_item" Member="items" ThisKey="id" OtherKey="slot_type_id" Type="item" />
+      <Association Name="slot_type_item_picture" Member="item_pictures" ThisKey="id" OtherKey="slot_type_id" Type="item_picture" />
+      <Association Name="item_category_slot_type" Member="item_category" ThisKey="item_category_id" OtherKey="id" Type="item_category" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.stat_types" Member="stat_types">
+    <Type Name="stat_type">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="codename" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="stat_type_stat" Member="stats" ThisKey="id" OtherKey="stat_type_id" Type="stat" />
+    </Type>
+  </Table>
+  <Table Name="dbo.stats" Member="stats">
+    <Type Name="stat">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="stat_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="tooltip" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="stat_charecter_stat" Member="charecter_stats" ThisKey="id" OtherKey="stat_id" Type="charecter_stat" />
+      <Association Name="stat_item_stat" Member="item_stats" ThisKey="id" OtherKey="stat_id" Type="item_stat" />
+      <Association Name="stat_type_stat" Member="stat_type" ThisKey="stat_type_id" OtherKey="id" Type="stat_type" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.user_rights" Member="user_rights">
+    <Type Name="user_right">
+      <Column Name="user_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="rights_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Association Name="right_user_right" Member="right" ThisKey="rights_id" OtherKey="id" Type="right" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="user_user_right" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.item_pictures" Member="item_pictures">
+    <Type Name="item_picture">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="img_type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="slot_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="item_picture_item" Member="items" ThisKey="id" OtherKey="picture_id" Type="item" />
+      <Association Name="slot_type_item_picture" Member="slot_type" ThisKey="slot_type_id" OtherKey="id" Type="slot_type" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

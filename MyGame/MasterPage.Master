@@ -1,0 +1,85 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="MyGame.MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title>MyGame</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/MyGame.css" />
+    <asp:ContentPlaceHolder ID="head_css" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form_mygame" runat="server">
+        <div id="wrapper" class="container">
+            <header id="header">
+                <div id="banner">
+                    <img class="img-responsive" src="img/design/background.jpg" />
+                    <asp:Panel ID="Panel_Header_Right_UL" runat="server" CssClass="btn-group pull-right">
+                        <asp:LinkButton ID="LinkButton_Primary" runat="server">
+                            <asp:Literal ID="Literal_LinkButton_Primary" runat="server"></asp:Literal>
+                        </asp:LinkButton>
+
+                        <button type="button" class="btn btn-sm btn-default dropdown-toggle button-log-panel" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu active-btn-custom button-log-panel-drop-menu" role="menu">
+                            <asp:Repeater ID="Repeater_Panel_Header_Right_UL" runat="server" ItemType="MyGame.link">
+                                <ItemTemplate>
+                                    <li <%# MyGame.Helper.ClassActiveString(Item.urlpage, "outside") %>>
+                                        <a href="<%# Item.urlpage %>">
+                                            <%# Item.glyphicon.tag + " " + Item.name %>
+                                        </a>
+                                    </li>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </ul>
+                    </asp:Panel>
+                </div>
+            </header>
+
+            <nav id="nav" class="col-lg-offset-1">
+                <ul class="nav-list list-inline">
+                    <li><a href="Default.aspx">
+                        <img class="img-responsive img-circle" src="img/design/menu_button_home.jpg" /></a></li>
+                    <li><a href="#" runat="server" id="menu_character">
+                        <img class="img-responsive img-circle <%= inactive() %>" src="img/design/menu_button_character.jpg" /></a></li>
+                    <li><a href="#" runat="server" id="menu_town">
+                        <img class="img-responsive img-circle <%= inactive() %>" src="img/design/menu_button_town.jpg" /></a></li>
+                    <li><a href="#" runat="server" id="menu_adventure">
+                        <img class="img-responsive img-circle <%= inactive() %>" src="img/design/menu_button_adventure.jpg" /></a></li>
+                    <li><a href="#" runat="server" id="menu_socials">
+                        <img class="img-responsive img-circle <%= inactive() %>" src="img/design/menu_button_socials.jpg" /></a></li>
+                </ul>
+            </nav>
+            <main id="main" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <asp:ContentPlaceHolder ID="main_content" runat="server"></asp:ContentPlaceHolder>
+            </main>
+            <footer id="footer">
+                <p class="pull-left text-center">MyGame Entertainment &#169;‎</p>
+                <div class="btn-group dropup pull-right">
+                    <a href="#" class="btn btn-sm btn-default button-log-panel">FAQ</a>
+                    <button type="button" class="btn btn-sm btn-default dropdown-toggle button-log-panel" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu active-btn-custom button-log-panel-drop-menu" role="menu">
+                        <li><a href="#">Link 1</a></li>
+                        <li><a href="#">Link 2</a></li>
+                        <li><a href="#">Link 3</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-comment"></span> Support</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <asp:ContentPlaceHolder ID="foot_js" runat="server"></asp:ContentPlaceHolder>
+        <script type="text/javascript" src="js/MyGame.js"></script>
+    </form>
+</body>
+</html>
